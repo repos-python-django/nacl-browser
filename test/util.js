@@ -30,14 +30,12 @@ function hex2abv(hex) {
   return abv;
 }
 
-// TODO
-function encode(s) {
-  var result = new Uint8Array(s.length);
+// Latin-1 encode a given string.
+function encode(str) {
+  var result = new Uint8Array(str.length);
 
-  for (var i = 0; i < s.length; i++) {
-    var c = s.charCodeAt(i);
-    if ((c & 0xff) !== c) throw {message: "Cannot encode string in Latin1", str: s};
-    result[i] = (c & 0xff);
+  for (var i = 0; i < str.length; i++) {
+    result[i] = str.charCodeAt(i) & 0xff;
   }
 
   return result;
