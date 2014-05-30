@@ -4,42 +4,34 @@
 
 "use strict";
 
-var hash = require("./hash.js");
-var auth_BYTES = hash.hash_sha512_BYTES;
-var auth_KEYBYTES = hash.hash_sha512_BYTES;
-
 function importKey(key, usage) {
-  // TODO check key bytes
+  if (key.byteLength != 32) {
+    throw new Error("Invalid key size");
+  }
 
-  var algo = {name: "HMAC", hash: "SHA-512"};
+  var algo = {name: "HMAC", hash: "SHA-256"};
   return crypto.subtle.importKey("raw", key, algo, false, [usage]);
 }
 
-function hmac(key, msg) {
-  /*var kbytes = auth_KEYBYTES;
-
-  if (key.byteLength != kbytes) {
-    throw new Error("hmac() key needs to be exactly " + kbytes + " bytes!");
-  }*/
-
+function hmac_sha256(key, msg) {
   return importKey(key, "sign").then(function (key) {
     return crypto.subtle.sign("HMAC", key, msg);
   });
 }
 
-function hmac_verify(key, msg, mac) {
+function hmac_sha256_verify(key, msg, mac) {
+  if (mac.byteLength != 32) {
+    throw new Error("Invalid MAC size");
+  }
+
   return importKey(key, "verify").then(function (key) {
     return crypto.subtle.verify("HMAC", key, mac, msg);
   });
 }
 
-// TODO crypto_auth_hmacsha256
-// TODO crypto_auth_hmacsha512256
-
 module.exports = {
-  auth: hmac,
-  auth_verify: hmac_verify,
-
-  auth_BYTES: auth_BYTES,
-  auth_KEYBYTES: auth_KEYBYTES
+  auth: hmac_sha256,
+  auth_verify: hmac_sha256_verify,
+  auth_hmacsha256: hmac_sha256,
+  auth_hmacsha256_verify: hmac_sha256_verify
 };
