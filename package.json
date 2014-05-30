@@ -33,8 +33,8 @@
   "testling": {
     "files": "test/*.js",
     "browsers": [
+      "firefox/nightly",
       "chrome/canary",
-      "firefox/32..nightly",
       "opera/next"
     ]
   },
