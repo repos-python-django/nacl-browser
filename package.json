@@ -29,5 +29,13 @@
   },
   "scripts": {
     "test": "tape test/*.js"
-  }
+  },
+  "testling": {
+    "files": "test/*.js",
+    "browsers": [
+      "chrome/canary",
+      "firefox/32..nightly",
+      "opera/next"
+    ]
+  },
 }
