@@ -21,11 +21,6 @@ function sha512(msg) {
 
 module.exports = {
   hash: sha512,
-  hash_BYTES: sha512_BYTES,
-
   hash_sha256: sha256,
-  hash_sha256_BYTES: sha256_BYTES,
-
   hash_sha512: sha512,
-  hash_sha512_BYTES: sha512_BYTES,
 };

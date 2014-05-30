@@ -46,17 +46,15 @@ test("[nacl.hash]", function (t) {
 
     var vector = vectors.shift();
     var name = vector.name;
-    var msg = util.encode_utf8(vector.msg);
+    var msg = util.encode(vector.msg);
 
     // Test the current vector.
     t.test(name + " (#" + ++counter + ")", function (t) {
-      t.plan(2);
+      t.plan(1);
 
       // Hash.
       nacl[name](msg).then(function (result) {
-        t.equal(result.byteLength, nacl[name + "_BYTES"], "valid hash length");
-        t.equal(util.to_hex(result), vector.hash, "valid hash result");
-
+        t.equal(util.abv2hex(result), vector.hash, "valid hash");
         next_vector();
       });
     });

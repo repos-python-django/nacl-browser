@@ -85,7 +85,7 @@ var vectors = [
 ];
 
 function try_arg_sizes(method, key_len, iv_len) {
-  var msg = util.encode_utf8("Just a test message.");
+  var msg = util.encode("Just a test message.");
   var key = crypto.getRandomValues(new Uint8Array(key_len));
   var iv = crypto.getRandomValues(new Uint8Array(iv_len));
   nacl[method](key, iv, msg);
@@ -101,9 +101,9 @@ test("[nacl.stream]", function (t) {
 
     var vector = vectors.shift();
     var name = vector.name;
-    var key = util.from_hex(vector.key);
-    var iv = util.from_hex(vector.iv);
-    var msg = util.from_hex(vector.msg);
+    var key = util.hex2abv(vector.key);
+    var iv = util.hex2abv(vector.iv);
+    var msg = util.hex2abv(vector.msg);
 
     // Test the current vector.
     t.test(name + "_xor (#" + ++counter + ")", function (t) {
@@ -111,11 +111,11 @@ test("[nacl.stream]", function (t) {
 
       // Encrypt.
       nacl[name + "_xor"](key, iv, msg).then(function (result) {
-        t.equal(util.to_hex(result), vector.ct, "valid encryption");
+        t.equal(util.abv2hex(result), vector.ct, "valid encryption");
 
         // Decrypt.
         nacl[name + "_xor"](key, iv, result).then(function (result) {
-          t.equal(util.to_hex(result), util.to_hex(msg), "valid decryption");
+          t.equal(util.abv2hex(result), util.abv2hex(msg), "valid decryption");
 
           // Next test vector.
           next_vector();
@@ -132,7 +132,7 @@ test("[nacl.stream]", function (t) {
       t.plan(1);
 
       nacl[name](key, iv, msg.byteLength).then(function (result) {
-        t.equal(util.to_hex(result), vector.raw, "valid key stream");
+        t.equal(util.abv2hex(result), vector.raw, "valid key stream");
       });
     });
   })();

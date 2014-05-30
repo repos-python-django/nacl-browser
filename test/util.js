@@ -5,41 +5,40 @@
 "use strict";
 
 module.exports = {
-  encode_utf8: encode_utf8,
-  encode_latin1: encode_latin1,
-  from_hex: from_hex,
-  to_hex: to_hex
+  abv2hex: abv2hex,
+  hex2abv: hex2abv,
+  encode: encode
 };
 
-function encode_utf8(s) {
-  return encode_latin1(unescape(encodeURIComponent(s)));
+// Convert an ArrayBufferView to a hex string.
+function abv2hex(abv) {
+  var b = new Uint8Array(abv.buffer, abv.byteOffset, abv.byteLength);
+  var hex = "";
+  for (var i=0; i <b.length; ++i) {
+    var zeropad = (b[i] < 0x10) ? "0" : "";
+    hex += zeropad + b[i].toString(16);
+  }
+  return hex;
 }
 
-function encode_latin1(s) {
+// Convert a hex string to an ArrayBufferView.
+function hex2abv(hex) {
+  var abv = new Uint8Array(hex.length / 2);
+  for (var i=0; i<abv.length; ++i) {
+    abv[i] = parseInt(hex.substr(2*i, 2), 16);
+  }
+  return abv;
+}
+
+// TODO
+function encode(s) {
   var result = new Uint8Array(s.length);
+
   for (var i = 0; i < s.length; i++) {
     var c = s.charCodeAt(i);
     if ((c & 0xff) !== c) throw {message: "Cannot encode string in Latin1", str: s};
     result[i] = (c & 0xff);
   }
+
   return result;
-}
-
-function from_hex(s) {
-  var result = new Uint8Array(s.length / 2);
-  for (var i = 0; i < s.length / 2; i++) {
-    result[i] = parseInt(s.substr(2*i,2),16);
-  }
-  return result;
-}
-
-function to_hex(bs) {
-  var encoded = [];
-
-  for (var i = 0; i < bs.length; i++) {
-    encoded.push("0123456789abcdef"[(bs[i] >> 4) & 15]);
-    encoded.push("0123456789abcdef"[bs[i] & 15]);
-  }
-
-  return encoded.join("");
 }
