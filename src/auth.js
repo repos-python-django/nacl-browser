@@ -24,8 +24,20 @@ function hmac_sha256_verify(key, msg, mac) {
     throw new Error("Invalid MAC size");
   }
 
-  return importKey(key, "verify").then(function (key) {
-    return crypto.subtle.verify("HMAC", key, mac, msg);
+  // Import the key outside of the Promise constructor so that an invalid
+  // key size exception isn't swallowed and rejects the promise instead.
+  var importedKey = importKey(key, "verify");
+
+  return new Promise(function (resolve, reject) {
+    importedKey.then(function (key) {
+      crypto.subtle.verify("HMAC", key, mac, msg).then(function (verified) {
+        if (verified) {
+          resolve();
+        } else {
+          reject("Verification failed");
+        }
+      });
+    });
   });
 }
 
