@@ -109,7 +109,7 @@ test("[nacl.auth] bad", function (t) {
   var key = util.hex2abv("0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b000000000000000000000000");
   var msg = util.hex2abv("4869205468657265");
 
-  // The first octect of the MAC has been set to zero.
+  // The first octet of the MAC has been set to zero.
   var mac = util.hex2abv("00344c61d8db38535ca8afceaf0bf12b881dc200c9833da726e9376c2e32cff7");
 
   // Try to verify MAC.
