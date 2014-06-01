@@ -8,6 +8,11 @@ var test = require("tape");
 var nacl = require("../");
 var util = require("./util.js");
 
+// Skip stream module tests in Chrome for now, AES-CTR isn't implemented, yet.
+if (window.chrome) {
+  return;
+}
+
 var vectors = [
   // http://tools.ietf.org/html/rfc3686#section-6
 
