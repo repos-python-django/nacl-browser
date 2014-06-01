@@ -9,7 +9,7 @@ function importKey(key, usage) {
     throw new Error("Invalid key size");
   }
 
-  return crypto.subtle.importKey("raw", key, "AES-GCM", false, [usage]);
+  return crypto.subtle.importKey("raw", key, {name: "AES-GCM"}, false, [usage]);
 }
 
 function aes256_gcm(key, iv, msg, action) {
