@@ -4,18 +4,19 @@
 
 "use strict";
 
+var ALGORITHM = {name: "HMAC", hash: {name: "SHA-256"}};
+
 function importKey(key, usage) {
   if (key.byteLength != 32) {
     throw new Error("Invalid key size");
   }
 
-  var algo = {name: "HMAC", hash: "SHA-256"};
-  return crypto.subtle.importKey("raw", key, algo, false, [usage]);
+  return crypto.subtle.importKey("raw", key, ALGORITHM, false, [usage]);
 }
 
 function hmac_sha256(key, msg) {
   return importKey(key, "sign").then(function (key) {
-    return crypto.subtle.sign("HMAC", key, msg);
+    return crypto.subtle.sign({name: "HMAC"}, key, msg);
   });
 }
 
@@ -30,7 +31,7 @@ function hmac_sha256_verify(key, msg, mac) {
 
   return new Promise(function (resolve, reject) {
     importedKey.then(function (key) {
-      crypto.subtle.verify("HMAC", key, mac, msg).then(function (verified) {
+      crypto.subtle.verify(ALGORITHM, key, mac, msg).then(function (verified) {
         if (verified) {
           resolve();
         } else {
