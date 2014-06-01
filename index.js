@@ -5,6 +5,7 @@
 mix(require("./src/hash.js"), module.exports);
 mix(require("./src/auth.js"), module.exports);
 mix(require("./src/stream.js"), module.exports);
+mix(require("./src/secretbox.js"), module.exports);
 
 function mix(from, into) {
   for (var key in from) {

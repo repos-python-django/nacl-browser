@@ -1,6 +1,6 @@
 {
   "name": "nacl-browser",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "NaCl API port for browsers using the Web Cryptography API",
   "main": "index.js",
   "repository": {
@@ -25,7 +25,8 @@
     "url": "https://github.com/ttaubert/nacl-browser/issues"
   },
   "devDependencies": {
-    "tape": "~2.13.1"
+    "tape": "~2.13.1",
+    "sjcl": "~1.0.1"
   },
   "scripts": {
     "test": "tape test/*.js"
