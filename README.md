@@ -7,9 +7,7 @@ This module is supported by Firefox Nightly (32+) out of the box.
 Chrome Canary (37+) works (except the _stream_ module due to a missing AES-CTR
 implementation) with experimental Web Platform features enabled.
 
-# example
 
-TODO
 
 # stream
 
@@ -32,6 +30,8 @@ Secret-key encryption module.
 > NaCl does not make any promises regarding the resistance of `stream()` to
 > "related-key attacks." It is the caller's responsibility to use proper
 > key-derivation functions.
+
+#### example
 
 ```js
 var msg = "The quick brown fox jumps over the lazy dog";
@@ -126,6 +126,8 @@ Secret-key message authentication module.
 > authenticator for the same message. NaCl also does not make any
 > promises regarding "truncated unforgeability".
 
+#### example
+
 ```js
 var msg = "The quick brown fox jumps over the lazy dog";
 var data = new TextEncoder("utf-8").encode(msg);
@@ -191,6 +193,8 @@ promise will be rejected if the MAC is not a valid authenticator.
 # hashing
 
 Cryptographic hash functions.
+
+#### example
 
 ``` js
 var msg = "The quick brown fox jumps over the lazy dog";
