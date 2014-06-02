@@ -70,12 +70,12 @@ Uint8Array [ 84, 104, 101, 32, 113, 117, 105, 99, 107, 32, ... (and 33 more) ]
 
 #### .secretbox(ArrayBuffer[32] key, ArrayBuffer[16] nonce, ArrayBuffer data) → Promise
 
-See `.secretbox_aes256gcm()` as it is the default authenticated-encryption
+See `secretbox_aes256gcm()` as it is the default authenticated-encryption
 function.
 
 #### .secretbox_open(ArrayBuffer[32] key, ArrayBuffer[16] nonce, ArrayBuffer data) → Promise
 
-See `.secretbox_aes256gcm_open()` as it is the default authenticated-decryption
+See `secretbox_aes256gcm_open()` as it is the default authenticated-decryption
 function.
 
 #### .secretbox_aes256gcm(ArrayBuffer[32] key, ArrayBuffer[16] nonce, ArrayBuffer data) → Promise
@@ -162,7 +162,7 @@ Uint8Array [ 134, 224, 238, 236, 79, 249, 6, 79, 2, 171, ... (and 33 more) ]
 
 #### .stream(ArrayBuffer[32] key, ArrayBuffer[16] nonce, uint length) → Promise
 
-See `.stream_aes256ctr()` as it is the default key stream generator.
+See `stream_aes256ctr()` as it is the default key stream generator.
 
 #### .stream_xor(ArrayBuffer[32] key, ArrayBuffer[16] nonce, ArrayBuffer data) → Promise
 
@@ -259,11 +259,11 @@ Uint8Array [ 148, 166, 133, 235, 128, 30, 117, 8, 40, 89, ... (and 22 more) ]
 
 #### .auth(ArrayBuffer[32] key, ArrayBuffer data) → Promise
 
-See `.auth_hmacsha256()` as it is the default authentication function.
+See `auth_hmacsha256()` as it is the default authentication function.
 
 #### .auth_verify(ArrayBuffer[32] key, ArrayBuffer data, ArrayBuffer[32] mac) → Promise
 
-See `.auth_hmacsha256_verify()` as it is the default verification function.
+See `auth_hmacsha256_verify()` as it is the default verification function.
 
 #### .auth_hmacsha256(ArrayBuffer[32] key, ArrayBuffer data) → Promise
 
@@ -303,7 +303,7 @@ Uint8Array [ 7, 229, 71, 217, 88, 111, 106, 115, 247, 63, ... (and 54 more) ]
 
 #### .hash(ArrayBuffer data) → Promise
 
-See `.hash_sha512()` as it is the default hash function.
+See `hash_sha512()` as it is the default hash function.
 
 #### .hash_sha256(ArrayBuffer data) → Promise
 
