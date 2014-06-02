@@ -1,6 +1,6 @@
 {
   "name": "nacl-browser",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "NaCl API port for browsers using the Web Cryptography API",
   "main": "index.js",
   "repository": {
