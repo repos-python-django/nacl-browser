@@ -15,15 +15,14 @@ TODO
 
 Secret-key message authentication module.
 
-> SECURITY NOTE
->
 > Unlike the original NaCl library the default authentication function is
 > HMAC-SHA-256 instead of HMAC-SHA-512/256 because unfortunately the Web
 > Cryptography API does not provide an implementation of the latter.
 >
 > While SHA-512/256 can be implemented more efficiently on modern 64-bit CPUs,
 > SHA-512 truncated to 256 bits is as safe as SHA-256 as far as the
-> cryptography community knows.
+> cryptography community knows. Additionally, HMACs are substantially less
+> affected by collisions than their underlying hashing algorithms alone.
 
 #### .auth(ArrayBuffer[32] key, ArrayBuffer data) → Promise
 
