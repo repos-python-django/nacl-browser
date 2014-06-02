@@ -7,6 +7,7 @@
 var test = require("tape");
 var nacl = require("../");
 var util = require("./util.js");
+var bytes = require("utf8-bytes");
 
 var vectors = [
   // https://en.wikipedia.org/wiki/SHA-512#Examples_of_SHA-2_variants
@@ -46,7 +47,7 @@ test("[nacl.hash]", function (t) {
 
     var vector = vectors.shift();
     var name = vector.name;
-    var msg = util.encode(vector.msg);
+    var msg = new Uint8Array(bytes(vector.msg));
 
     // Test the current vector.
     t.test(name + " (#" + ++counter + ")", function (t) {

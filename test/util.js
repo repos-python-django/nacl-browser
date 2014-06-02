@@ -6,8 +6,7 @@
 
 module.exports = {
   abv2hex: abv2hex,
-  hex2abv: hex2abv,
-  encode: encode
+  hex2abv: hex2abv
 };
 
 // Convert an ArrayBufferView to a hex string.
@@ -28,15 +27,4 @@ function hex2abv(hex) {
     abv[i] = parseInt(hex.substr(2*i, 2), 16);
   }
   return abv;
-}
-
-// Latin-1 encode a given string.
-function encode(str) {
-  var result = new Uint8Array(str.length);
-
-  for (var i = 0; i < str.length; i++) {
-    result[i] = str.charCodeAt(i) & 0xff;
-  }
-
-  return result;
 }

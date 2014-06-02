@@ -25,8 +25,9 @@
     "url": "https://github.com/ttaubert/nacl-browser/issues"
   },
   "devDependencies": {
+    "sjcl": "~1.0.1",
     "tape": "~2.13.1",
-    "sjcl": "~1.0.1"
+    "utf8-bytes": "~0.0.1"
   },
   "scripts": {
     "test": "tape test/*.js"
