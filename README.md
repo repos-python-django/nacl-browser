@@ -21,8 +21,10 @@ Secret-key message authentication module.
 >
 > While SHA-512/256 can be implemented more efficiently on modern 64-bit CPUs,
 > SHA-512 truncated to 256 bits is as safe as SHA-256 as far as the
-> cryptography community knows. Additionally, HMACs are substantially less
-> affected by collisions than their underlying hashing algorithms alone.
+> cryptography community knows.
+>
+> Additionally, HMACs are substantially less affected by collisions than their
+> underlying hashing algorithms alone.
 
 #### .auth(ArrayBuffer[32] key, ArrayBuffer data) → Promise
 
@@ -82,7 +84,8 @@ nacl.auth_hmacsha256(key, data).then(function (mac) {
     key = crypto.getRandomValues(new Uint8Array(32));
 
     nacl.auth_hmacsha256_verify(key, data, mac).then(function () {
-      // We should not get here as the promise (with high probability) must not resolve.
+      // We should not get here as the promise
+      // (with high probability) must not resolve.
     }, function () {
       console.log("Given MAC is *not* a valid authenticator under the new key!");
     });
