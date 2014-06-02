@@ -12,27 +12,27 @@ function importKey(key, usage) {
   return crypto.subtle.importKey("raw", key, {name: "AES-GCM"}, false, [usage]);
 }
 
-function aes256_gcm(key, iv, msg, action) {
-  if (iv.byteLength != 16) {
-    throw new Error("Invalid IV size");
+function aes256_gcm(key, nonce, msg, action) {
+  if (nonce.byteLength != 16) {
+    throw new Error("Invalid nonce size");
   }
 
   return importKey(key, action).then(function (key) {
-    var algo = {name: "AES-GCM", iv: iv, tagLength: 128};
+    var algo = {name: "AES-GCM", iv: nonce, tagLength: 128};
     return crypto.subtle[action](algo, key, msg);
   });
 }
 
-function aes256_gcm_encrypt(key, iv, msg) {
-  return aes256_gcm(key, iv, msg, "encrypt");
+function aes256_gcm_encrypt(key, nonce, msg) {
+  return aes256_gcm(key, nonce, msg, "encrypt");
 }
 
-function aes256_gcm_decrypt(key, iv, msg) {
+function aes256_gcm_decrypt(key, nonce, msg) {
   if (msg.byteLength < 16) {
     throw new Error("Message too short to include tag");
   }
 
-  return aes256_gcm(key, iv, msg, "decrypt");
+  return aes256_gcm(key, nonce, msg, "decrypt");
 }
 
 module.exports = {

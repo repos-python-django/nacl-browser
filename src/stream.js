@@ -8,36 +8,36 @@ function importKey(key) {
   return crypto.subtle.importKey("raw", key, "AES-CTR", false, ["encrypt"]);
 }
 
-function aes_ctr(key, iv, msg, key_bytes) {
+function aes_ctr(key, nonce, msg, key_bytes) {
   if (key.byteLength != key_bytes) {
     throw new Error("Invalid key size");
   }
 
-  if (iv.byteLength != 16) {
-    throw new Error("Invalid IV size");
+  if (nonce.byteLength != 16) {
+    throw new Error("Invalid nonce size");
   }
 
-  var algo = {name: "AES-CTR", counter: iv, length: 32};
+  var algo = {name: "AES-CTR", counter: nonce, length: 32};
 
   return importKey(key).then(function (key) {
     return crypto.subtle.encrypt(algo, key, msg);
   });
 }
 
-function aes128_ctr(key, iv, msg) {
-  return aes_ctr(key, iv, msg, 16);
+function aes128_ctr(key, nonce, msg) {
+  return aes_ctr(key, nonce, msg, 16);
 }
 
-function aes128_ctr_raw(key, iv, len) {
-  return aes128_ctr(key, iv, new Uint8Array(len));
+function aes128_ctr_raw(key, nonce, len) {
+  return aes128_ctr(key, nonce, new Uint8Array(len));
 }
 
-function aes256_ctr(key, iv, msg) {
-  return aes_ctr(key, iv, msg, 32);
+function aes256_ctr(key, nonce, msg) {
+  return aes_ctr(key, nonce, msg, 32);
 }
 
-function aes256_ctr_raw(key, iv, len) {
-  return aes256_ctr(key, iv, new Uint8Array(len));
+function aes256_ctr_raw(key, nonce, len) {
+  return aes256_ctr(key, nonce, new Uint8Array(len));
 }
 
 module.exports = {
