@@ -96,7 +96,6 @@ test("[nacl.auth]", function (t) {
           next_vector();
         }, function () {
           t.fail("mac should have verified");
-          next_vector();
         });
       });
     });
