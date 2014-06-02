@@ -41,17 +41,29 @@ test("[nacl.secretbox]", function (t) {
     var bytes = Math.pow(2, i + 1);
 
     t.test("secretbox_aes256gcm (" + bytes + " byte message)", function (t) {
-      t.plan(2);
+      t.plan(3);
 
       var key = random_bytes(32);
       var iv = random_bytes(16);
       var msg = random_bytes(bytes);
 
+      // Encrypt.
       nacl.secretbox_aes256gcm(key, iv, msg).then(function (result) {
         t.equal(sjcl_encrypt(key, iv, msg), util.abv2hex(result), "valid encryption");
 
+        // Decrypt.
         nacl.secretbox_aes256gcm_open(key, iv, result).then(function (result) {
           t.equal(util.abv2hex(msg), util.abv2hex(result), "valid decryption");
+        });
+
+        // Generate a new random key.
+        key = random_bytes(32);
+
+        // Try to decrypt.
+        nacl.secretbox_aes256gcm_open(key, iv, result).then(function (result) {
+          t.fail("decryption should have failed");
+        }, function () {
+          t.pass("decryption failed");
         });
       });
     });
