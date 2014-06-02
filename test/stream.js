@@ -7,7 +7,6 @@
 var test = require("tape");
 var nacl = require("../");
 var util = require("./util.js");
-var bytes = require("utf8-bytes");
 
 // Skip stream module tests in Chrome for now, AES-CTR isn't implemented, yet.
 if (window.chrome) {
@@ -91,7 +90,7 @@ var vectors = [
 ];
 
 function try_arg_sizes(method, key_len, iv_len) {
-  var msg = new Uint8Array(bytes("Just a test message."));
+  var msg = new TextEncoder("utf-8").encode("Just a test message.");
   var key = crypto.getRandomValues(new Uint8Array(key_len));
   var iv = crypto.getRandomValues(new Uint8Array(iv_len));
   nacl[method](key, iv, msg);

@@ -7,7 +7,6 @@
 var test = require("tape");
 var nacl = require("../");
 var util = require("./util.js");
-var bytes = require("utf8-bytes");
 
 var vectors = [
   // https://tools.ietf.org/html/rfc4231#section-4
@@ -56,14 +55,14 @@ var vectors = [
 ];
 
 function try_auth_key_size(key_len) {
-  var msg = new Uint8Array(bytes("Just a test message."));
+  var msg = new TextEncoder("utf-8").encode("Just a test message.");
   var key = crypto.getRandomValues(new Uint8Array(key_len));
   var msg = crypto.getRandomValues(new Uint8Array(8));
   nacl.auth_hmacsha256(key, msg);
 }
 
 function try_verify_sizes(key_len, mac_len) {
-  var msg = new Uint8Array(bytes("Just a test message."));
+  var msg = new TextEncoder("utf-8").encode("Just a test message.");
   var key = crypto.getRandomValues(new Uint8Array(key_len));
   var msg = crypto.getRandomValues(new Uint8Array(8));
   var mac = crypto.getRandomValues(new Uint8Array(mac_len));
