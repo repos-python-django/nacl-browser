@@ -4,9 +4,6 @@
 
 "use strict";
 
-var sha256_BYTES = 32;
-var sha512_BYTES = 64;
-
 function digest(algo, msg) {
   return crypto.subtle.digest({name: algo}, msg);
 }
