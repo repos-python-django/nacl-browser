@@ -312,25 +312,60 @@ Uint8Array [ 148, 166, 133, 235, 128, 30, 117, 8, 40, 89, ... (and 22 more) ]
 "Given MAC is *not* a valid authenticator under the new key!"
 ```
 
-### auth(ArrayBuffer[32] key, ArrayBuffer data) → Promise
+### auth()
 
 See `auth_hmacsha256()` as it is the default authentication function.
 
-### auth_verify(ArrayBuffer[32] key, ArrayBuffer data, ArrayBuffer[32] mac) → Promise
+### auth_verify()
 
 See `auth_hmacsha256_verify()` as it is the default verification function.
 
-### auth_hmacsha256(ArrayBuffer[32] key, ArrayBuffer data) → Promise
+### auth_hmacsha256()
 
-Returns a promise that resolves to the HMAC-SHA-256 authenticator corresponding
-to the data contained in the given ArrayBuffer under the given key. The key
-length must be exactly 32 bytes. The result has a fixed length of 32 bytes.
+Computes a HMAC-SHA-256 message authentication code for a given message.
 
-### auth_hmacsha256_verify(ArrayBuffer[32] key, ArrayBuffer data, ArrayBuffer[32] mac) → Promise
+```
+Promise auth_hmacsha256(
+  ArrayBuffer[32] key,
+  ArrayBuffer data
+);
+```
 
-Returns a promise that resolves when the given MAC is a valid authenticator
-for the data contained in the given ArrayBuffer under the given key. The
-promise will be rejected if the MAC is not a valid authenticator.
+##### key
+The key used to calculate the authentication code. Must be exactly 32 bytes.
+
+##### data
+The message that a MAC is computed for.
+
+##### return value
+A promise that resolves to the HMAC-SHA-256 authenticator of `data`. The result
+has a fixed length of 32 bytes.
+
+### auth_hmacsha256_verify()
+
+Checks whether a given message authentication code is a valid HMAC-SHA-256
+authenticator for a given message.
+
+```
+Promise auth_hmacsha256_verify(
+  ArrayBuffer[32] key,
+  ArrayBuffer data,
+  ArrayBuffer[32] mac
+);
+```
+
+##### key
+The key used to calculate the authentication code. Must be exactly 32 bytes.
+
+##### data
+The message that `mac` was computed for.
+
+##### mac
+The message authentication code for `data`. Must be exactly 32 bytes.
+
+##### return value
+A promise that resolves if `mac` is a valid authenticator for `data` under the
+given `key`. The promise will be reject if `mac` is not a valid authenticator.
 
 
 
