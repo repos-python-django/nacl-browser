@@ -85,32 +85,70 @@ Uint8Array [ 84, 104, 101, 32, 113, 117, 105, 99, 107, 32, ... (and 33 more) ]
 "Given data is *not* a valid ciphertext under the new key!"
 ```
 
-#### secretbox(ArrayBuffer[32] key, ArrayBuffer[16] nonce, ArrayBuffer data) → Promise
+#### secretbox()
 
 See `secretbox_aes256gcm()` as it is the default authenticated-encryption
 function.
 
-#### secretbox_open(ArrayBuffer[32] key, ArrayBuffer[16] nonce, ArrayBuffer data) → Promise
+#### secretbox_open()
 
 See `secretbox_aes256gcm_open()` as it is the default authenticated-decryption
 function.
 
-#### secretbox_aes256gcm(ArrayBuffer[32] key, ArrayBuffer[16] nonce, ArrayBuffer data) → Promise
+#### secretbox_aes256gcm()
 
-Returns a promise that resolves to the AES-256-GCM encryption and
-authentication of the data contained in the given ArrayBuffer under the
-given key and nonce. The key length must be exactly 32 bytes. The nonce
-must have a length of 16 bytes. The result will have the same length as
-`data` plus a 16 byte tag that will be used to verify the ciphertext.
+Provides authenticated encryption using the Galois/Counter mode and AES with
+a 256-bit key.
 
-#### secretbox_aes256gcm_open(ArrayBuffer[32] key, ArrayBuffer[16] nonce, ArrayBuffer data) → Promise
+```
+Promise secretbox_aes256gcm(
+  ArrayBuffer[32] key,
+  ArrayBuffer[16] nonce,
+  ArrayBuffer data
+);
+```
 
-Returns a promise that resolves to the AES-256-GCM decryption of the data
-contained in the given ArrayBuffer under the given key and nonce. The promise
-will be rejected if the last 16 byte of `data` are not a valid authenticator.
-The key length must be exactly 32 bytes. The nonce must have a length of 16
-bytes. The result will have the same length as `data` minus 16 byte that were
-used for the tag.
+##### key
+The key used for encryption. Must be exactly 32 bytes.
+
+##### nonce
+The unique per-key nonce used for encryption. Must be exactly 16 bytes.
+
+##### data
+The message that will be encrypted.
+
+##### return value
+A promise that resolves to the AES-256-GCM encryption of `data`. The result
+will have the same length as `data` plus 16 bytes for the tag that will be
+used to verify the ciphertext.
+
+#### secretbox_aes256gcm_open()
+
+Decrypts a given ciphertext that was encrypted using the Galois/Counter mode
+and AES with a 256-bit key.
+
+```
+Promise secretbox_aes256gcm_open(
+  ArrayBuffer[32] key,
+  ArrayBuffer[16] nonce,
+  ArrayBuffer data
+);
+```
+
+##### key
+The key that was used for encryption. Must be exactly 32 bytes.
+
+##### nonce
+The unique per-key nonce that was used for encryption. Must be exactly 16 bytes.
+
+##### data
+The ciphertext that will be decrypted.
+
+##### return value
+A promise that resolves to the decryption of `data` under the given key and
+nonce. The result will have the same length as `data` minus 16 bytes that were
+used for the tag. The promise will be rejected if the last 16 bytes of `data`
+are not a valid authenticator for the given ciphertext.
 
 
 
@@ -318,21 +356,43 @@ Uint8Array [ 7, 229, 71, 217, 88, 111, 106, 115, 247, 63, ... (and 54 more) ]
 ```
 
 
-#### hash(ArrayBuffer data) → Promise
+#### hash()
 
 See `hash_sha512()` as it is the default hash function.
 
-#### hash_sha256(ArrayBuffer data) → Promise
+#### hash_sha256()
 
-Returns a promise that resolves to the SHA-256 message digest corresponding to
-the data contained in the given ArrayBuffer. The result has a fixed lenght of
-32 bytes.
+Computes the SHA-256 message digest for a given message.
 
-#### hash_sha512(ArrayBuffer data) → Promise
+```
+Promise hash_sha256(
+  ArrayBuffer data
+);
+```
 
-Returns a promise that resolves to the SHA-512 message digest corresponding to
-the data contained in the given ArrayBuffer. The result has a fixed length of
-64 bytes.
+##### data
+The message that a hash value is computed for.
+
+##### return value
+A promise that resolves to the SHA-256 message digest corresponding to `data`.
+The result has a fixed length of 32 bytes.
+
+#### hash_sha512()
+
+Computes the SHA-512 message digest for a given message.
+
+```
+Promise hash_sha512(
+  ArrayBuffer data
+);
+```
+
+##### data
+The message that a hash value is computed for.
+
+##### return value
+A promise that resolves to the SHA-512 message digest corresponding to `data`.
+The result has a fixed length of 64 bytes.
 
 
 
