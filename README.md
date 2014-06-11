@@ -112,7 +112,10 @@ Promise secretbox_aes256gcm(
 The key used for encryption. Must be exactly 32 bytes.
 
 #### nonce
-The unique per-key nonce used for encryption. Must be exactly 16 bytes.
+The unique nonce used for encryption. Must be exactly 16 bytes. It is the
+caller's responsibility to ensure its uniqueness — for example, by using nonce
+1 for the first message, nonce 2 for the second message, etc. Nonces are long
+enough that randomly generated nonces have negligible risk of collision.
 
 #### data
 The message that will be encrypted.
@@ -139,7 +142,10 @@ Promise secretbox_aes256gcm_open(
 The key that was used for encryption. Must be exactly 32 bytes.
 
 #### nonce
-The unique per-key nonce that was used for encryption. Must be exactly 16 bytes.
+The unique nonce used for encryption. Must be exactly 16 bytes. It is the
+caller's responsibility to ensure its uniqueness — for example, by using nonce
+1 for the first message, nonce 2 for the second message, etc. Nonces are long
+enough that randomly generated nonces have negligible risk of collision.
 
 #### data
 The ciphertext that will be decrypted.
@@ -239,8 +245,11 @@ Promise stream_aes128ctr(
 The key used to generate the key stream. Must be exactly 16 bytes.
 
 #### nonce
-The unique per-key nonce used to generate the key stream.
-Must be exactly 16 bytes.
+The unique nonce used to generate the key stream. Must be exactly 16 bytes.
+It is the caller's responsibility to ensure its uniqueness — for example, by
+using nonce 1 for the first message, nonce 2 for the second message, etc.
+Nonces are long enough that randomly generated nonces have negligible risk of
+collision.
 
 #### length
 The desired length of the resulting key stream.
@@ -265,8 +274,11 @@ Promise stream_aes128ctr_xor(
 The key used for encryption/decryption. Must be exactly 16 bytes.
 
 #### nonce
-The unique per-key nonce used for encryption/decryption.
-Must be exactly 16 bytes.
+The unique nonce used to for encryption/decryption. Must be exactly 16 bytes.
+It is the caller's responsibility to ensure its uniqueness — for example, by
+using nonce 1 for the first message, nonce 2 for the second message, etc.
+Nonces are long enough that randomly generated nonces have negligible risk of
+collision.
 
 #### data
 The message/ciphertext that will be encrypted/decrypted.
@@ -292,8 +304,11 @@ Promise stream_aes256ctr(
 The key used to generate the key stream. Must be exactly 32 bytes.
 
 #### nonce
-The unique per-key nonce used to generate the key stream.
-Must be exactly 16 bytes.
+The unique nonce used to generate the key stream. Must be exactly 16 bytes.
+It is the caller's responsibility to ensure its uniqueness — for example, by
+using nonce 1 for the first message, nonce 2 for the second message, etc.
+Nonces are long enough that randomly generated nonces have negligible risk of
+collision.
 
 #### length
 The desired length of the resulting key stream.
@@ -318,8 +333,11 @@ Promise stream_aes256ctr_xor(
 The key used for encryption/decryption. Must be exactly 32 bytes.
 
 #### nonce
-The unique per-key nonce used for encryption/decryption.
-Must be exactly 16 bytes.
+The unique nonce used to for encryption/decryption. Must be exactly 16 bytes.
+It is the caller's responsibility to ensure its uniqueness — for example, by
+using nonce 1 for the first message, nonce 2 for the second message, etc.
+Nonces are long enough that randomly generated nonces have negligible risk of
+collision.
 
 #### data
 The message/ciphertext that will be encrypted/decrypted.
